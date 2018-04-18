@@ -8,10 +8,6 @@ script:
   - docker run --rm -it -v "${TRAVIS_BUILD_DIR}":/build -e "TRAVIS=${TRAVIS_BUILD_ID}" -e "GLUSTERFS_VERSION=${GLUSTERFS_VERSION}" "${SYSTEM}" /build/build.sh
   - mkdir rpms && mv *.rpm rpms/
   - ls -ltr rpms/
-before_deploy:
-  - git config --local user.name "aallrd"
-  - git config --local user.email "antoine.allard@outlook.com"
-  - git tag "${GLUSTERFS_VERSION}-${SYSTEM/:/-}-$(uname -p)" || git checkout "${GLUSTERFS_VERSION}-${SYSTEM/:/-}-$(uname -p)"
 deploy:
   skip_cleanup: true
   provider: releases
@@ -21,4 +17,5 @@ deploy:
   file_glob: true
   file: rpms/*
   on:
+    tags: true
     repo: aallrd/glusterfs-build-arm
