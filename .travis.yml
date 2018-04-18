@@ -3,6 +3,7 @@ services:
 - docker
 language: bash
 env:
+- SYSTEM=centos:7
 - GLUSTERFS_VERSION=4.0
 script:
-- docker run --rm -it -v $(pwd):/build -e "GLUSTERFS_VERSION=${GLUSTERFS_VERSION}" centos /build/build.sh
+- docker run --rm -it -v $(pwd):/build -e "GLUSTERFS_VERSION=${GLUSTERFS_VERSION}" "${SYSTEM}" /build/build.sh
