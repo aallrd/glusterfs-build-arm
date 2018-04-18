@@ -30,22 +30,22 @@ yum update \
     && yum clean all
 
 _echo "Starting build..."
-./autogen.sh | tee "${__log}"
+./autogen.sh
 if [[ $? -ne 0 ]] ; then
     _echo "Failed to autogen."
     exit 1
 fi
-./configure | tee "${__log}"
+./configure
 if [[ $? -ne 0 ]] ; then
     _echo "Failed to configure."
     exit 1
 fi
-make -j4 | tee "${__log}"
+make -j4
 if [[ $? -ne 0 ]] ; then
     _echo "Failed to make."
     exit 1
 fi
-make install | tee "${__log}"
+make install
 if [[ $? -ne 0 ]] ; then
     _echo "Failed to install."
     exit 1
@@ -54,7 +54,7 @@ fi
 _echo "Starting packaging..."
 cd extras/LinuxRPM || \
     { _echo "Failed to change directory to extras/LinuxRPM"; exit 1;}
-make glusterrpms | tee "${__log}"
+make glusterrpms
 if [[ $? -ne 0 ]] ; then
     _echo "Failed to package."
     exit 1
