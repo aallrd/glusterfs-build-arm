@@ -9,18 +9,20 @@ function _echo {
 _echo "Gluster: ${GLUSTERFS_VERSION}"
 _echo "Installing script dependencies..."
 yum update \
-    && yum install -y wget unzip git make rpm-build mock \
+    && yum install -y git make rpm-build mock \
     && yum clean all
 
 _echo "Downloading gluster-release-${GLUSTERFS_VERSION}..."
-wget "https://github.com/gluster/glusterfs/archive/release-${GLUSTERFS_VERSION}.zip" -qO glusterfs-source.zip
+git clone https://github.com/gluster/glusterfs.git
 if [[ $? -ne 0 ]] ; then
-    _echo "Failed to download glusterfs release ${GLUSTERFS_VERSION}."
+    _echo "Failed to clone the glusterfs github mirror."
     exit 1
 fi
-unzip -qq glusterfs-source.zip && rm $_
-cd glusterfs-release-${GLUSTERFS_VERSION} || \
-    { _echo "Failed to change directory to glusterfs-release-${GLUSTERFS_VERSION}"; exit 1;}
+cd glusterfs && git checkout release-${GLUSTERFS_VERSION}
+if [[ $? -ne 0 ]] ; then
+    _echo "Failed to checkout glusterfs release ${GLUSTERFS_VERSION}."
+    exit 1
+fi
 
 _echo "Installing glusterfs dependencies..."
 yum update \
