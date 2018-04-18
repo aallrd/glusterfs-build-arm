@@ -10,7 +10,7 @@ script:
 before_deploy:
   - git config --local user.name "aallrd"
   - git config --local user.email "antoine.allard@outlook.com"
-  - git tag "${GLUSTERFS_VERSION}-${SYSTEM/:/-}-$(uname -p)"
+  - git tag "${GLUSTERFS_VERSION}-${SYSTEM/:/-}-$(uname -p)" || git checkout "${GLUSTERFS_VERSION}-${SYSTEM/:/-}-$(uname -p)"
 deploy:
   provider: releases
   api_key:
