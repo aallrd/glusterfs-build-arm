@@ -5,7 +5,7 @@ language: bash
 env:
   - SYSTEM=centos:7 GLUSTERFS_VERSION=4.0
 script:
-  - docker run --rm -it -v "${TRAVIS_BUILD_DIR}":/build -e "GLUSTERFS_VERSION=${GLUSTERFS_VERSION}" "${SYSTEM}" /build/build.sh
+  - docker run --rm -it -v "${TRAVIS_BUILD_DIR}":/build -e "TRAVIS=${TRAVIS_BUILD_ID}" -e "GLUSTERFS_VERSION=${GLUSTERFS_VERSION}" "${SYSTEM}" /build/build.sh
   - ls -ltr
 before_deploy:
   - git config --local user.name "aallrd"

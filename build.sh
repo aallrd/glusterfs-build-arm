@@ -67,4 +67,11 @@ fi
 
 mv *.rpm /build
 
+if [[ -z ${TRAVIS+x} || ${TRAVIS} == "" ]] ; then
+    "Deploying binaries to github..."
+    wget -q https://github.com/tcnksm/ghr/releases/download/v0.9.0/ghr_v0.9.0_linux_amd64.tar.gz -O - | tar -xz
+    cp ghr_v0.9.0_linux_amd64/ghr . && rm -Rf ghr_v0.9.0_linux_amd64
+    ./ghr --help
+fi
+
 exit 0
