@@ -5,4 +5,17 @@ language: bash
 env:
   - SYSTEM=centos:7 GLUSTERFS_VERSION=4.0
 script:
-  - docker run --rm -it -v $(pwd):/build -e "GLUSTERFS_VERSION=${GLUSTERFS_VERSION}" "${SYSTEM}" /build/build.sh
+  - docker run --rm -it -v "${TRAVIS_BUILD_DIR}":/build -e "GLUSTERFS_VERSION=${GLUSTERFS_VERSION}" "${SYSTEM}" /build/build.sh
+  - ls -ltr
+before_deploy:
+  - git config --local user.name "aallrd"
+  - git config --local user.email "antoine.allard@outlook.com"
+  - git tag "${GLUSTERFS_VERSION}-${SYSTEM/:/-}-$(uname -p)"
+deploy:
+  provider: releases
+  api_key:
+    secure: wwyy8eIrW8Z8evXgJ86UBEJekaB7ZOsmcvq8z4x9y/Xc8Ko5c1IVw/l9nnS0iV0mefdQW6cw4shZX+KiRR7qfAIFtYeoVhX7noBwSFJdl4faU9C+yeScAAgllxGeCN1GnZzaWUXvCOyEo+qZUb0Lj/Q+3NiZw1Yc0xrMLYjtKDHrKRdCInZujpTtQkWfwubG7tZT/uY0CQXJ9u5RnKc6fgkrkfqpIPFu6SJlWSg5vuEkv1iga0NdcmTEMLJbrojNhBm1WlT+6WAqHYDTCDrW/sNY3EoJz/IWLdPdxX6PFTClxZqcxaYMOpcM6FpEQqiG1xgEedamdy9RHowFbw/Wrtn0kwyTnr/ST96FGb5rHtGsdthveAL2i4DVfk1dugm4q+88QkwzlkE9a8wljwzNOwiwl3DJmImqzTjdBxp8+BFMYdFQfsV5w7Yse/NncJJF3FDW+9/QCC4CPK+jvXBl4phUCi22HHmtlDqLN5rZfeT4LFcmhr5Xa5qzDi2ID28/pUbB9dRRbPm5fNNl+0NMIgmiV5On5jWeIhoUIE6rqCQvtT1DQAHP4LMvDfca8qFYhyrU20OTP5URXxCus1LUpwNBroLooVgivpMahZUdSctk3GlBuzj+/yjtHc0k9S7NR5WxmK4OaRq5iSZpNIVgYeyPoHDNy8kBKw72pQj15Kk=
+  file_glob: true
+  file: "*.rpm"
+  on:
+    repo: aallrd/glusterfs-build-arm
