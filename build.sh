@@ -65,6 +65,6 @@ if [[ $? -ne 0 ]] ; then
     exit 1
 fi
 
-ls -ltr
+mv *.rpm /build
 
 exit 0
