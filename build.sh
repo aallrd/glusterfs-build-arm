@@ -25,8 +25,13 @@ if [[ $? -ne 0 ]] ; then
 fi
 
 _echo "Installing glusterfs dependencies..."
-yum update \
+yum update -y \
     && yum install -y automake autoconf libtool flex bison openssl-devel libxml2-devel python-devel libaio-devel libibverbs-devel librdmacm-devel readline-devel lvm2-devel glib2-devel userspace-rcu-devel libcmocka-devel libacl-devel sqlite-devel fuse-devel redhat-rpm-config firewalld \
+    && yum clean all
+
+yum install -y epel-release \
+    && yum update -y \
+    && yum install -y userspace-rcu-devel \
     && yum clean all
 
 _echo "Starting build..."
