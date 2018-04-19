@@ -6,7 +6,9 @@ function _echo {
     echo "${1}" | tee "${__log}"
 }
 
+_echo "Host: $(uname -a)"
 _echo "Gluster: ${GLUSTERFS_VERSION}"
+
 _echo "Installing script dependencies..."
 yum update \
     && yum install -y git make rpm-build mock \

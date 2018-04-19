@@ -3,17 +3,14 @@ services:
   - docker
 language: bash
 env:
-  - ARCH=amd64 SYSTEM=centos:7 GLUSTERFS_VERSION=4.0 TAG=${GLUSTERFS_VERSION}-${SYSTEM/:/-}-$(uname -p)
+  - ARCH="amd64" SYSTEM="centos:7" GLUSTERFS_VERSION="4.0" TAG="${GLUSTERFS_VERSION}-${SYSTEM/:/-}-$(uname -p)"
 script:
-  - docker run --rm -it -v "${TRAVIS_BUILD_DIR}":/build -e "TRAVIS=${TRAVIS_BUILD_ID}" -e "GLUSTERFS_VERSION=${GLUSTERFS_VERSION}" "${ARCH}/${SYSTEM}" uname -a && /build/build.sh
+  - docker run --rm -it -v "${TRAVIS_BUILD_DIR}":/build -e "TRAVIS=${TRAVIS_BUILD_ID}" -e "GLUSTERFS_VERSION=${GLUSTERFS_VERSION}" "${ARCH}/${SYSTEM}" /build/build.sh
   - mkdir rpms && mv *.rpm rpms/
   - ls -ltr rpms/
--before_deploy:
-  - git config --local user.name "aallrd"
-  - git config --local user.email "antoine.allard@outlook.com"
-  - git push --delete origin "${GLUSTERFS_VERSION}-${SYSTEM/:/-}-$(uname -p)" || true
-  - git tag --delete "${GLUSTERFS_VERSION}-${SYSTEM/:/-}-$(uname -p)" || true
-  - git tag "${GLUSTERFS_VERSION}-${SYSTEM/:/-}-$(uname -p)"
+before_deploy:
+  - git checkout "tags/${TAG}" 2>/dev/null || { git tag "${TAG}" ; }
+  - git tag
 deploy:
   skip_cleanup: true
   provider: releases
