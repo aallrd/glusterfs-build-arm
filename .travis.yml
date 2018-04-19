@@ -3,9 +3,9 @@ services:
   - docker
 language: bash
 env:
-  - SYSTEM=centos:7 GLUSTERFS_VERSION=4.0
+  - ARCH=amd64 SYSTEM=centos:7 GLUSTERFS_VERSION=4.0 TAG=${GLUSTERFS_VERSION}-${SYSTEM/:/-}-$(uname -p)
 script:
-  - docker run --rm -it -v "${TRAVIS_BUILD_DIR}":/build -e "TRAVIS=${TRAVIS_BUILD_ID}" -e "GLUSTERFS_VERSION=${GLUSTERFS_VERSION}" "${SYSTEM}" /build/build.sh
+  - docker run --rm -it -v "${TRAVIS_BUILD_DIR}":/build -e "TRAVIS=${TRAVIS_BUILD_ID}" -e "GLUSTERFS_VERSION=${GLUSTERFS_VERSION}" "${ARCH}/${SYSTEM}" uname -a && /build/build.sh
   - mkdir rpms && mv *.rpm rpms/
   - ls -ltr rpms/
 -before_deploy:
