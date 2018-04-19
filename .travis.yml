@@ -4,7 +4,12 @@ services:
 language: bash
 env:
   - ARCH="amd64" SYSTEM="centos:7" GLUSTERFS_VERSION="4.0" TAG="${GLUSTERFS_VERSION}-${SYSTEM/:/-}-$(uname -p)"
+  - ARCH="arm32v7" SYSTEM="centos:7" GLUSTERFS_VERSION="4.0" TAG="${GLUSTERFS_VERSION}-${SYSTEM/:/-}-$(uname -p)"
 script:
+  - >
+    if [ "${ARCH}" == "arm32v7" ]; then
+      docker run --rm --privileged multiarch/qemu-user-static:register --reset
+    fi
   - docker run --rm -it -v "${TRAVIS_BUILD_DIR}":/build -e "TRAVIS=${TRAVIS_BUILD_ID}" -e "GLUSTERFS_VERSION=${GLUSTERFS_VERSION}" "${ARCH}/${SYSTEM}" /build/build.sh
   - mkdir rpms && mv *.rpm rpms/
   - ls -ltr rpms/
