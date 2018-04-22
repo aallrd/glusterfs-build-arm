@@ -2,5 +2,8 @@ sudo: required
 services:
   - docker
 language: bash
+env:
+  global:
+    secure: oX3petstnJZAJ9xPYx0iqwMU4QZUK50nwCsQzx3vcUEDciS6X0GwR07eYEl2E7RWAzFSG7dTp+bW/xfuzuxUHTGr3+ieRS2h6iJzr61FNL/SWy1Ml733DFh2VdrkpGkGzR0fr3RviOql5gC5PrGAcg2tL1p4julwj075lU4r8rsCpn6Mq6QL22yvHWY4uiLt1jQXpJAjE+/GwX0YlFcLqi1MJRmLyAOGsxDdnYlZa284WYr1RVJUjGqcy7UHo0t7L3APyOd+8LSWAvotcf+X9g3ajoQWzNK+LTF3XRKt4j1U9aQtwuahMPzHftl1FpAcJjcz8gRPmMUT9KCuFyOvrajZ1VbImgvC0vlQ/p8crKNK1VgIQ5JZ7CMt+ScFtDYB+SQ+Jjd4n9rCZpE4J063V37G44hO8pwhLCzwGVdpkfFaFJTaXS9nitdJlyCbisUKu0a231MPUiVvmImMZIgIdABlfDXGrbzWc0svLDl+DYHcFey1xinKvUAlLsFzLb8o3XHt6hN/xIFJBMjLigyyeMR8u+Cdm71QXm0wj6t+umNcnkJJ7OuGBP2kCgA+Yj+3HCNUrwXLkYc0vwZoGfIXNG24WyAbhhMh5NywHdWpZuL1dlwsr+3077UyYtDbbGrA7jJtU9Gazt9MN/1Uvm8E6h5hIUol0N/v3fKaDXkx0XA=
 script:
   - docker build --build-arg GITHUB_TOKEN=${GITHUB_TOKEN} .
