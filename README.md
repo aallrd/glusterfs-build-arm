@@ -1,3 +1,5 @@
-# glusterfs-build-arm
+# glusterfs-build-rpms
 
-    docker run --rm -it -v $(pwd):/build -e "GLUSTERFS_VERSION=4.0" centos /build/build.sh
+[![Build Status](https://travis-ci.org/aallrd/glusterfs-build-rpms.svg?branch=master)](https://travis-ci.org/aallrd/glusterfs-build-rpms)
+
+    docker build .
