@@ -18,4 +18,5 @@ ARG GITHUB_TOKEN
 ENV GITHUB_TOKEN ${GITHUB_TOKEN:-}
 RUN go get -u github.com/tcnksm/ghr
 COPY --from=builder /rpms .
-RUN ls -ltr && ghr --help
+RUN tar -czf glusterfs-rpms-$(uname -m).tar.gz ./* \
+  && ghr -replace -u aallrd -r glusterfs-build-rpms 4.0-centos-7 .
